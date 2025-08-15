@@ -135,6 +135,10 @@
             <audio id="bgMusic" preload="auto" loop>
                 <source src="../../music/august2025/LoveMe.mp3" type="audio/mp3">
                 <source src="../../music/august2025/YourLovePianoCover.mp3" type="audio/mp3">
+                <source src="../../music/august2025/Connie Francis - Pretty Little Baby.mp3" type="audio/mp3">
+            </audio>
+            <audio id="bgMusic2" preload="auto" loop>
+                <source src="../../music/august2025/Connie Francis - Pretty Little Baby.mp3" type="audio/mp3">
             </audio>
         </div>
     </div>
@@ -169,10 +173,22 @@
       text = messages[msgIndex];
       typeStep();
     }
+    let next;
     document.getElementById('surpriseBtn').addEventListener('click', () => {
       const current = messages.indexOf(text);
-      const next = (current + 1) % messages.length;
+      next = (current + 1) % messages.length;
       startTyping(next);
+
+      if(next == 3){
+        currentTrack1 = 0;
+        bgMusic.pause();
+        bgMusic2.src = sources2[currentTrack].src;
+        bgMusic2.play().catch(()=>{});
+      }
+      else{
+        bgMusic2.pause();
+        bgMusic.play().catch(() => {});
+      }
     });
     startTyping(0);
 
@@ -205,10 +221,38 @@
 
     // Music
     const musicBtn=document.getElementById('musicToggle');
+    const musicBtn2=document.getElementById('musicToggle');
     const bgMusic=document.getElementById('bgMusic');
+    const bgMusic2=document.getElementById('bgMusic2');
+       // Get all source elements
+    const sources = bgMusic.querySelectorAll("source");
+    const sources2 = bgMusic2.querySelectorAll("source");
+    let currentTrack = 0;
+    let currentTrack2 = 0;
+
+    // Load the first source
+    bgMusic.src = sources[currentTrack].src;
+    bgMusic.loop = false; // We'll handle looping manually
+    window.addEventListener("load", () => {
+        bgMusic.muted = true;
+        bgMusic.play().catch(()=>{});
+        setTimeout(()=>{ bgMusic.muted = false; }, 100);
+        musicBtn.textContent = '🔊';
+    });
+    // When track ends, switch to the next one
+    bgMusic.addEventListener("ended", () => {
+    currentTrack = (currentTrack + 1) % sources.length;
+    bgMusic.src = sources[currentTrack].src;
+    bgMusic.play().catch(() => {});
+    });
     musicBtn.addEventListener('click',()=>{
-        if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent='🔊'; }
-        else{ bgMusic.pause(); musicBtn.textContent='🔇'; }
+        if(next != 3){
+            if(bgMusic.paused){ bgMusic.play(); musicBtn.textContent='🔊'; }
+            else{ bgMusic.pause(); musicBtn.textContent='🔇'; }
+        }else{
+            if(bgMusic2.paused){ bgMusic2.play(); musicBtn2.textContent='🔊'; }
+            else{ bgMusic2.pause(); musicBtn2.textContent='🔇'; }
+        }
     });
 
     // Theme

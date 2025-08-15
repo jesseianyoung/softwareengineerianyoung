@@ -137,7 +137,7 @@
 <body>
 
 <div class="container">
-    <h1>Happy Pogi Day Budong, We love you so much. 💖</h1>
+    <h1>Happy Pogi Day Budz, We love you so much. 💖</h1>
     <div class="portrait-container">
         <div class="portrait">
             <img src="../../images/BudzAug2025.jpg" alt="Couple smiling together during August monthsary celebration">
@@ -157,11 +157,24 @@
     /* MUSIC */
     const sound = document.getElementById("backgroundSound");
     const playPauseButton = document.getElementById("playPauseButton");
+    // Get all source elements
+    const sources = sound.querySelectorAll("source");
+    let currentTrack = 0;
+
+    // Load the first source
+    sound.src = sources[currentTrack].src;
+    sound.loop = false; // We'll handle looping manually
     window.addEventListener("load", () => {
         sound.muted = true;
         sound.play().catch(()=>{});
         setTimeout(()=>{ sound.muted = false; }, 100);
         playPauseButton.textContent = "Pause Sound";
+    });
+    // When track ends, switch to the next one
+    sound.addEventListener("ended", () => {
+    currentTrack = (currentTrack + 1) % sources.length;
+    sound.src = sources[currentTrack].src;
+    sound.play().catch(() => {});
     });
     playPauseButton.addEventListener("click", () => {
         if(sound.paused){ sound.play().catch(()=>{}); playPauseButton.textContent="Pause Sound"; }

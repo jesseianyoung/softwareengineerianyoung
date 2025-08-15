@@ -22,7 +22,7 @@ public class MonthsaryLetterMonths {
         letters.put("May", "Happy 5th Monthsary! Every month with you is a gift I treasure.");
         letters.put("June", "6 months of memories, laughter, and love. Here's to us!");
         letters.put("July", "Together for 7 months and I still fall for you every single day.");
-        letters.put("August", "/letters/augustletter2025.html");
+        letters.put("August", "/letters/MonthsaryAugust2025/Passcode.html");
         letters.put("September", "September is sweeter because of you. Happy 9th Monthsary!");
         letters.put("October", "10 months and my heart beats only for you. Cheers to us!");
         letters.put("November", "11 months and still feeling butterflies every time I see you.");

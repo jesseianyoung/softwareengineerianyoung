@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ian Young Passcode Monthsary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --bg-dark: linear-gradient(135deg, #3b0a45, #4b0d6d, #1c2b36);
+          --bg-light: linear-gradient(135deg, #5f4b8b, #7f5d92, #514d6a);
+          --text-dark: #f5f5f5;
+          --text-light: #222;
+          --key-bg-dark: rgba(255,255,255,0.15);
+          --key-bg-light: rgba(0,0,0,0.15);
+          --key-hover-dark: rgba(255,255,255,0.3);
+          --key-hover-light: rgba(0,0,0,0.25);
+          --error-color-dark: #ff6f61;
+          --error-color-light: #ff4081;
+          --glow-color: #ff1493;
+        }
+
+        body {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          background: var(--bg-dark);
+          background-size: 300% 300%;
+          animation: gradientBG 8s ease infinite alternate;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          flex-direction: column;
+          color: var(--text-dark);
+          overflow-y: auto;
+          position: relative;
+        }
+
+        body.light {
+          background: var(--bg-light);
+          color: var(--text-light);
+          animation: none;
+        }
+
+        @keyframes gradientBG {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
+        }
+
+        .container {
+          text-align: center;
+          background: rgba(255,255,255,0.1);
+          padding: 30px;
+          border-radius: 20px;
+          box-shadow: 0 0 20px rgba(255,255,255,0.3);
+          backdrop-filter: blur(10px);
+          z-index: 2;
+          width: 90%;
+          max-width: 400px;
+          margin: 20px;
+        }
+
+        .pass-display {
+          font-size: 2rem;
+          letter-spacing: 15px;
+          margin-bottom: 20px;
+          min-height: 40px;
+        }
+
+        .keypad {
+          display: grid;
+          grid-template-columns: repeat(3, 80px);
+          gap: 15px;
+          justify-content: center;
+          margin-top: 20px;
+        }
+
+        .key {
+          width: 70px;
+          height: 70px;
+          font-size: 1.4rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+          background: linear-gradient(135deg, #ff5f5f, #ff8a7d);
+          color: var(--text-dark);
+          clip-path: polygon(50% 0%, 0% 30%, 0% 70%, 50% 100%, 100% 70%, 100% 30%);
+          box-shadow: 0 4px 6px rgba(255, 105, 180, 0.5);
+        }
+
+        .key:active {
+          animation: pulse 0.2s ease-out forwards;
+        }
+
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.2); }
+          100% { transform: scale(1); }
+        }
+
+        .key:hover {
+          transform: scale(1.05);
+          background: linear-gradient(135deg, #ff8a7d, #ff5f5f);
+          box-shadow: 0 4px 8px rgba(255, 105, 180, 0.7);
+        }
+
+        #error {
+          color: var(--error-color-dark);
+          display: none;
+          margin-top: 10px;
+          transition: color 0.5s;
+        }
+
+        .shake {
+          animation: shakeAnim 0.4s;
+        }
+
+        @keyframes shakeAnim {
+          0% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          50% { transform: translateX(5px); }
+          75% { transform: translateX(-5px); }
+          100% { transform: translateX(0); }
+        }
+
+        .flash-red {
+          animation: flashRed 0.5s ease;
+        }
+
+        @keyframes flashRed {
+          0% { background-color: rgba(255,0,0,0.4); }
+          100% { background-color: rgba(255,255,255,0.1); }
+        }
+
+        .heart-confetti {
+          position: fixed;
+          width: 30px;
+          height: 30px;
+          background-color: #ff1493;
+          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+          animation: fall linear forwards;
+          z-index: 1;
+          box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        @keyframes fall {
+          to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .explode-heart {
+          position: fixed;
+          width: 30px;
+          height: 30px;
+          background-color: #ff1493;
+          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+          animation: explode 0.8s ease-out forwards;
+          box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        @keyframes explode {
+          0% { transform: translate(0,0) scale(1); opacity: 1; }
+          100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
+        }
+
+        .toggle-btn {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 30px;
+          border: 2px solid transparent;
+          border-radius: 50px;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 1.2rem;
+          color: white;
+          background: linear-gradient(45deg, #ff758c, #ff7eb3, #42a5f5);
+          text-transform: uppercase;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.3s ease;
+          z-index: 10;
+        }
+
+        .toggle-btn:before {
+          content: "💖";
+          margin-right: 8px;
+        }
+
+        .toggle-btn:hover {
+          background: linear-gradient(45deg, #f0c0d0, #e6a1c3, #ff7eb3);
+          transform: scale(1.1);
+          box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .monthsary-message {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: 'Great Vibes', cursive;
+          font-size: 3rem;
+          color: #ffccff;
+          font-weight: bold;
+          text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493, 0 0 60px #ff1493;
+          animation: fadeIn 3s ease, scaleUp 3s ease;
+          z-index: 9999;
+          opacity: 0;
+        }
+
+        @keyframes fadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+          0% { transform: translate(-50%, -50%) scale(0.8); }
+          100% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @media (max-width: 600px) {
+          .keypad {
+            grid-template-columns: repeat(3, 70px);
+            gap: 10px;
+          }
+
+          .key {
+            width: 70px;
+            height: 70px;
+            font-size: 1.3rem;
+          }
+
+          .pass-display {
+            font-size: 1.5rem;
+          }
+
+          .container {
+            padding: 20px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<button class="toggle-btn" onclick="toggleMode()">🌗 Toggle Mode</button>
+
+<div class="container" id="container">
+    <h1>🔒 Enter Passcode</h1>
+    <div class="pass-display" id="pass-display"></div>
+    <div class="keypad" id="keypad">
+        <div class="key" onclick="enterDigit('1')">1</div>
+        <div class="key" onclick="enterDigit('2')">2</div>
+        <div class="key" onclick="enterDigit('3')">3</div>
+        <div class="key" onclick="enterDigit('4')">4</div>
+        <div class="key" onclick="enterDigit('5')">5</div>
+        <div class="key" onclick="enterDigit('6')">6</div>
+        <div class="key" onclick="enterDigit('7')">7</div>
+        <div class="key" onclick="enterDigit('8')">8</div>
+        <div class="key" onclick="enterDigit('9')">9</div>
+        <div class="key" onclick="clearPass()">⌫</div>
+        <div class="key" onclick="enterDigit('0')">0</div>
+        <div class="key" onclick="submitPass()">✔</div>
+    </div>
+    <p id="error">❌ Wrong passcode!</p>
+</div>
+
+<script>
+    const passcodes = {
+      "0801": "SuprisePictureSound.html",
+      "0911": "../../images/AugustMonthsary2025Pic4.jpg",
+      "1201": "augustletter2025.html",
+      "0304": "BudzAug2025.html"
+    };
+
+    let inputPass = "";
+    let display = document.getElementById("pass-display");
+    let keypad = document.getElementById("keypad");
+    let container = document.getElementById("container");
+
+    function enterDigit(num) {
+      if (inputPass.length < 4) {
+        inputPass += num;
+        display.textContent = "•".repeat(inputPass.length);
+      }
+    }
+
+    function clearPass() {
+      inputPass = inputPass.slice(0, -1);
+      display.textContent = "•".repeat(inputPass.length);
+    }
+
+    function submitPass() {
+      const errorMsg = document.getElementById("error");
+
+      if (passcodes[inputPass]) {
+        if (inputPass === "0801") {
+          hidePasscode();
+          showAnimationBeforeRedirect(() => window.location.href = passcodes[inputPass]); // Added animation before redirect
+        } else if (inputPass === "1201") {
+          hidePasscode();
+          heartCelebrate(() => window.location.href = passcodes[inputPass]);
+        } else if (inputPass === "0911") {
+          hidePasscode();
+          showAnimation2BeforeRedirect(() => window.location.href = passcodes[inputPass]);
+        } else if (inputPass === "0304") {
+          hidePasscode();
+          showAnimation3BeforeRedirect(() => window.location.href = passcodes[inputPass]);
+        }
+          else {
+          window.location.href = passcodes[inputPass];
+        }
+      } else {
+        errorMsg.style.display = "block";
+        display.classList.add("shake");
+        container.classList.add("flash-red");
+        redExplosionConfetti();
+        setTimeout(() => display.classList.remove("shake"), 400);
+        setTimeout(() => container.classList.remove("flash-red"), 500);
+        setTimeout(() => errorMsg.style.display = "none", 1500);
+        inputPass = "";
+        display.textContent = "";
+      }
+    }
+
+    function hidePasscode() {
+      keypad.style.display = "none";
+      display.style.display = "none";
+      container.style.display = "none";
+    }
+
+    function showAnimationBeforeRedirect(callback) {
+      // Show fade-out animation before redirect
+      const fadeMessage = document.createElement("div");
+      fadeMessage.classList.add("monthsary-message");
+      fadeMessage.innerHTML = "Celebrating Moments with you I love you so much! 💖";
+      document.body.appendChild(fadeMessage);
+
+      // After animation, redirect
+      setTimeout(() => {
+        fadeMessage.style.opacity = 0;
+        setTimeout(() => {
+          document.body.removeChild(fadeMessage);
+          callback();
+        }, 500); // Wait until fade animation finishes
+      }, 2000); // Show message for 2 seconds
+    }
+
+    function showAnimation2BeforeRedirect(callback) {
+      // Show fade-out animation before redirect
+      const fadeMessage = document.createElement("div");
+      fadeMessage.classList.add("monthsary-message");
+      fadeMessage.innerHTML = "Great job you got it!. 💖 Suprise sa picture natin.";
+      document.body.appendChild(fadeMessage);
+
+      // After animation, redirect
+      setTimeout(() => {
+        fadeMessage.style.opacity = 0;
+        setTimeout(() => {
+          document.body.removeChild(fadeMessage);
+          callback();
+        }, 1000); // Wait until fade animation finishes
+      }, 2000); // Show message for 2 seconds
+    }
+
+    function showAnimation3BeforeRedirect(callback) {
+      // Show fade-out animation before redirect
+      const fadeMessage = document.createElement("div");
+      fadeMessage.classList.add("monthsary-message");
+      fadeMessage.innerHTML = "Suprise Pre Be happy always, We love you. 💖";
+      document.body.appendChild(fadeMessage);
+
+      // After animation, redirect
+      setTimeout(() => {
+        fadeMessage.style.opacity = 0;
+        setTimeout(() => {
+          document.body.removeChild(fadeMessage);
+          callback();
+        }, 1000); // Wait until fade animation finishes
+      }, 2000); // Show message for 2 seconds
+    }
+
+    function heartCelebrate(callback) {
+      const monthsaryMsg = document.createElement("div");
+      monthsaryMsg.classList.add("monthsary-message");
+      monthsaryMsg.innerHTML = "Happy Monthsary! 🎉💖😘💝🥰";
+      document.body.appendChild(monthsaryMsg);
+
+      setTimeout(() => {
+        for (let i = 0; i < 200; i++) createHeartConfetti();
+        setTimeout(() => {
+          document.body.removeChild(monthsaryMsg);
+          callback();
+        }, 3500);
+      }, 100);
+    }
+
+    function createHeartConfetti() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart-confetti");
+      document.body.appendChild(heart);
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    function redExplosionConfetti() {
+      const centerX = window.innerWidth / 2, centerY = window.innerHeight / 2;
+      for (let i = 0; i < 25; i++) {
+        const piece = document.createElement("div");
+        piece.classList.add("explode-heart");
+        piece.style.backgroundColor = "#ff1493";
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 200 + 50;
+        piece.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+        piece.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
+        piece.style.left = centerX + "px";
+        piece.style.top = centerY + "px";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 800);
+      }
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("light");
+    }
+</script>
+
+</body>
+</html>

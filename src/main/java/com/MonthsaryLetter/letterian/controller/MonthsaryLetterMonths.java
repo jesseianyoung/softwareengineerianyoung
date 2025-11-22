@@ -25,8 +25,8 @@ public class MonthsaryLetterMonths {
         letters.put("August", "/letters/MonthsaryAugust2025/Passcode.html");
         letters.put("September", "/letters/MonthsarySeptember2025/Passcode.html");
         letters.put("October", "/letters/MonthsaryOctober2025/Passcode.html");
-        letters.put("November", "11 months and still feeling butterflies every time I see you.");
-        letters.put("December", "A year is near, but my love for you will last forever. Happy monthsary!");
+        letters.put("November", "/letters/MonthsaryNovember2025/Passcode.html");
+        letters.put("December", "/letters/MonthsaryDecember2025/Passcode.html");
         return letters;
     }
 }

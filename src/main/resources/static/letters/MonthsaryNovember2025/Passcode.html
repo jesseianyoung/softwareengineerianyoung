@@ -270,7 +270,7 @@
 <script>
     const passcodes = {
       "0801": "SuprisePictureSound.html",
-      "0901": "septemberletter2025.html",
+      "1101": "novemberletter2025.html",
       "0304": "BudzAug2025.html"
     };
 
@@ -295,10 +295,10 @@
       const errorMsg = document.getElementById("error");
 
       if (passcodes[inputPass]) {
-        if (inputPass === "0901") {
+        if (inputPass === "1101") {
           hidePasscode();
           showAnimationBeforeRedirect(() => window.location.href = passcodes[inputPass]); // Added animation before redirect
-        } else if (inputPass === "1201") {
+        } else if (inputPass === "0000") {
           hidePasscode();
           heartCelebrate(() => window.location.href = passcodes[inputPass]);
         } else if (inputPass === "0304") {
@@ -381,7 +381,7 @@
     function heartCelebrate(callback) {
       const monthsaryMsg = document.createElement("div");
       monthsaryMsg.classList.add("monthsary-message");
-      monthsaryMsg.innerHTML = "Happy 9th Monthsary! 🎉💖😘💝🥰";
+      monthsaryMsg.innerHTML = "Happy 11th Monthsary! 🎉💖😘💝🥰";
       document.body.appendChild(monthsaryMsg);
 
       setTimeout(() => {
